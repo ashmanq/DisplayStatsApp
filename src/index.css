@@ -1,6 +1,27 @@
-body {
+body, html {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: black;
+  color: white;
+}
+
+.container {
+  /* margin: 2rem; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  place-content: center;
+  height: 100%;
+}
+
+.grid-box {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  height: 100%;
+  background-color: var(--colour);
 }
