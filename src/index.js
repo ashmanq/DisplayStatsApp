@@ -1,6 +1,7 @@
 const electron = require('electron');
 const path = require('path');
 const os = require('os');
+const si = require('systeminformation')
 
 const { app, BrowserWindow, ipcMain } = electron;
 
@@ -9,7 +10,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
   app.quit();
 }
 
-const createWindow = () => {
+const createWindow = async () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 320,
@@ -24,10 +25,11 @@ const createWindow = () => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
-  const ipAddresses = getIpAddress();
-  console.log(ipAddresses);
-  ipcMain.on('get-ip-addresses', (e, arg) => {
-    e.reply('reply-ip-addresses', ipAddresses);
+  
+  // console.log(ipAddresses);
+  ipcMain.on('get-ip-addresses', async (e, arg) => {
+    const sysInfoText = await getSystemInfo();
+    e.reply('reply-ip-addresses', sysInfoText);
   });
 
 };
@@ -58,18 +60,61 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 
-const getIpAddress = () => {
+const getSystemInfo = async () => {
   let interfaces = os.networkInterfaces();
-  let addresses = [];
 
-  for (var k in interfaces) {
-      for (var k2 in interfaces[k]) {
-          var address = interfaces[k][k2];
-          if (address.family === 'IPv4' && !address.internal) {
-              addresses.push(address.address);
-          }
+  let addresses = [];
+  let cpu = "n/a";
+  let memory = "n/a";
+  let disk = "n/a";
+
+  si.networkInterfaces()
+    .then(networkData => {
+      for (var k in networkData) {
+            var address = networkData[k];
+            if (address.ip4 !== '' && !address.internal) {
+                addresses.push(address.ip4);
+            }
       }
-  }
+    })
+    .catch(error => console.log(error));
+  cpu = await si.currentLoad()
+    .then(currentLoad => {
+      return `${(currentLoad.avgload*100).toFixed(1)}%`
+      
+      // console.log('CPU Load: ', (data.avgload*100).toFixed(1), '%')
+    })
+    .catch(error => console.error(error));
+  memory = await si.mem()
+    .then(mem => {
+      const memUsed = (mem.used/1048576).toFixed(0);
+      const memTotal = (mem.total/1048576).toFixed(0);
+      const memPercent = (mem.used/mem.total * 100).toFixed(1);
+      return `${memUsed}/${memTotal}MB - ${memPercent}%`
+    })
+    .catch(error => console.error(error));
+  disk = await si.fsSize()
+    .then(fsSize => {
+      const spaceTotal =  (fsSize[0].size/1048576).toFixed(0);
+      const spaceUsed = (fsSize[0].used/1048576).toFixed(0);
+      return `${spaceUsed}/${spaceTotal}MB - ${fsSize[0].use}%`;
+    })
+    .catch(error => log.error(error))
+
+  // for (var k in interfaces) {
+  //     for (var k2 in interfaces[k]) {
+  //         var address = interfaces[k][k2];
+  //         if (address.family === 'IPv4' && !address.internal) {
+  //             addresses.push(address.address);
+  //         }
+  //     }
+  // }
   // console.log(addresses);
-  return addresses;
+  const results = {
+    ip: addresses,
+    cpu: cpu,
+    mem:  memory,
+    disk: disk
+  }
+  return results;
 }
