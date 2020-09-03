@@ -7,29 +7,43 @@
   </head>
   <body>
     <section class="container">
-      <div class="grid-box" style="--colour: red">
-        <h1>💖 Hello World!</h1>
-        <p>Welcome to your Electron application.</p>
-        <p id="main-text"></p>
+      <div class="stats-container">
+        <div class="grid-box" style="--colour: black">
+          <h1>Stats</h1>
+          <div class="text-grid">
+            <div class="text-grid-text">
+              <p class="text-grid-text header">IP:</p>
+            </div>
+            <div class="text-grid-text">
+              <p id="ip-address" class=" stat">N/A</p>
+            </div>
+            <div class="text-grid-text">
+              <p class="text-grid-text header">CPU:</p>
+            </div>
+            <div class="text-grid-text">
+              <p id="cpu" class="text-grid-text stat">N/A</p>
+            </div>
+            <div class="text-grid-text">
+              <p class="text-grid-text header">Mem:</p>
+            </div>
+            <div class="text-grid-text">
+              <p id="memory" class="text-grid-text stat">N/A</p>
+            </div>
+            <div class="text-grid-text">
+              <p class="text-grid-text header">Disk:</p>
+            </div>
+            <div class="text-grid-text">
+              <p id="disk" class="text-grid-text stat">N/A</p>
+            </div>
+          </div>
+        </div>
+        <div class="btn-container">
+          <button id="refresh-btn" class="btn">Refresh</button>
+        </div>
       </div>
-      <div class="grid-box" style="--colour: blue">
-        <h1>💖 Hello World!</h1>
-        <p>Welcome to your Electron application.</p>
-        <!-- <p id="main-text"></p> -->
-      </div>
-      <div class="grid-box" style="--colour: green">
-        <h1>💖 Hello World!</h1>
-        <p>Welcome to your Electron application.</p>
-        <!-- <p id="main-text"></p> -->
-      </div>
-      <div class="grid-box" style="--colour: yellow">
-        <h1>💖 Hello World!</h1>
-        <p>Welcome to your Electron application.</p>
-        <!-- <p id="main-text"></p> -->
-      </div>
-
     </section>
 
+    
   </body>
   <script src="indexScript.js">
   </script>
