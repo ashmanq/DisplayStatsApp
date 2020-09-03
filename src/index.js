@@ -1,6 +1,5 @@
 const electron = require('electron');
 const path = require('path');
-const os = require('os');
 const si = require('systeminformation')
 
 const { app, BrowserWindow, ipcMain } = electron;
@@ -61,7 +60,6 @@ app.on('activate', () => {
 
 
 const getSystemInfo = async () => {
-  let interfaces = os.networkInterfaces();
 
   let addresses = [];
   let cpu = "n/a";
@@ -101,15 +99,6 @@ const getSystemInfo = async () => {
     })
     .catch(error => log.error(error))
 
-  // for (var k in interfaces) {
-  //     for (var k2 in interfaces[k]) {
-  //         var address = interfaces[k][k2];
-  //         if (address.family === 'IPv4' && !address.internal) {
-  //             addresses.push(address.address);
-  //         }
-  //     }
-  // }
-  // console.log(addresses);
   const results = {
     ip: addresses,
     cpu: cpu,
