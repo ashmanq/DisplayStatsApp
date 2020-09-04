@@ -78,9 +78,10 @@ const getSystemInfo = async () => {
     .catch(error => console.log(error));
   cpu = await si.currentLoad()
     .then(currentLoad => {
-      return `${(currentLoad.avgload*100).toFixed(1)}%`
+      // console.log('CPU ', (currentLoad.currentload).toFixed(1),'%');
+      return `${(currentLoad.currentload).toFixed(1)}%`
       
-      // console.log('CPU Load: ', (data.avgload*100).toFixed(1), '%')
+     
     })
     .catch(error => console.error(error));
   memory = await si.mem()
