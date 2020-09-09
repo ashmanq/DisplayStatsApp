@@ -7,6 +7,7 @@ const ipElement = document.getElementById('ip-address');
 const cpuElement = document.getElementById('cpu');
 const memoryElement = document.getElementById('memory');
 const diskElement = document.getElementById('disk');
+const lastUpdateElement = document.getElementById('last-update');
 
 // Attach event listener on button
 const refreshButton = document.getElementById('refresh-btn')
@@ -23,6 +24,7 @@ ipcRenderer.on('reply-ip-addresses', (e, sysInfo) => {
     cpuElement.textContent = sysInfo.cpu;
     memoryElement.textContent = sysInfo.mem;
     diskElement.textContent = sysInfo.disk;
+    lastUpdateElement.textContent = sysInfo.lastUpdate;
     // console.log('addresses:', addresses);
 });
 ipcRenderer.send('get-ip-addresses', 'get-address');

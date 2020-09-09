@@ -22,7 +22,7 @@ body, html {
     height: 100%;
     margin: auto;
     padding: 5px;
-    font-size: 0.9rem;
+    font-size: 2rem;
 }
 
 .container h1 {
@@ -65,9 +65,11 @@ body, html {
   /* margin: 1rem; */
 }
 .btn {
+  font-size: 1.5rem;
   margin: auto;
   padding:8px;
   margin-bottom: 5px;
+  margin-top: 10px;
   background-color: black;
   color: white;
   border-style: solid;

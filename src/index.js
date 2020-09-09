@@ -12,8 +12,8 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 const createWindow = async () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 320,
-    height: 240,
+    width: 640,
+    height: 480,
     webPreferences: {
       nodeIntegration: true
     }
@@ -65,6 +65,7 @@ const getSystemInfo = async () => {
   let cpu = "n/a";
   let memory = "n/a";
   let disk = "n/a";
+  const datetime = new Date().toLocaleString();
 
   si.networkInterfaces()
     .then(networkData => {
@@ -104,7 +105,8 @@ const getSystemInfo = async () => {
     ip: addresses,
     cpu: cpu,
     mem:  memory,
-    disk: disk
+    disk: disk,
+    lastUpdate: datetime,
   }
   return results;
 }
